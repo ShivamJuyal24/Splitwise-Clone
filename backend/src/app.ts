@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-
+import authRoutes from "./modules/auth/auth.routes"
 const app = express();
 
 // Middleware
@@ -18,5 +18,7 @@ app.get("/health", (req, res) => {
     message: "Expense Tracker API is running",
   });
 });
+
+app.use("/api/v1/auth", authRoutes);
 
 export default app;
