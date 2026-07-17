@@ -1,9 +1,9 @@
 import {RegisterInput, LoginInput} from './auth.validation'
 import bcrypt from "bcrypt"
 import { createUser, findUserByEmail} from '../users/user.repository'
-
+import jwt from "jsonwebtoken"
 export const register = async (data: RegisterInput)=>{
-    //check uf user already exists
+    //check if user already exists
     const existingUser = await findUserByEmail(data.email);
 
     if(existingUser){
@@ -28,3 +28,41 @@ export const register = async (data: RegisterInput)=>{
         createdAt: user.createdAt
     };
 };
+
+export const login = async ( data:LoginInput )=>{
+    //find user by email
+    const existingUser = await findUserByEmail(data.email);
+
+    if (!existingUser) {
+        throw new Error("Invalid email or password");
+    }
+    
+    const isPasswordValid = await bcrypt.compare(
+        data.password,
+        existingUser.password
+    );
+
+    if(!isPasswordValid){
+        throw new Error("Invalid emai or password")
+    }
+    
+    const token = jwt.sign(
+    {
+        userId: existingUser.id,
+    },
+    process.env.JWT_SECRET!,
+    {
+        expiresIn: "7d",
+    }
+);
+
+return {
+    token,
+    user: {
+        id: existingUser.id,
+        name: existingUser.name,
+        email: existingUser.email,
+    },
+};
+
+}
