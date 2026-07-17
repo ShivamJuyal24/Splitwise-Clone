@@ -1,7 +1,9 @@
 import {RegisterInput, LoginInput} from './auth.validation'
 import bcrypt from "bcrypt"
 import { createUser, findUserByEmail} from '../users/user.repository'
-import jwt from "jsonwebtoken"
+
+import {generateToken} from "../../utils/jwt"
+
 export const register = async (data: RegisterInput)=>{
     //check if user already exists
     const existingUser = await findUserByEmail(data.email);
@@ -46,15 +48,7 @@ export const login = async ( data:LoginInput )=>{
         throw new Error("Invalid emai or password")
     }
     
-    const token = jwt.sign(
-    {
-        userId: existingUser.id,
-    },
-    process.env.JWT_SECRET!,
-    {
-        expiresIn: "7d",
-    }
-);
+    const token = generateToken(existingUser.id);
 
 return {
     token,
