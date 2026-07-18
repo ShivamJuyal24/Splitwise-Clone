@@ -1,12 +1,40 @@
-# Splitwise Clone
+<div align="center">
 
-A production-grade expense sharing application inspired by Splitwise, built with modern backend engineering practices and a scalable architecture.
+# 💸 Splitwise Clone
 
-> **Status:** 🚧 In Development
+**A production-grade expense sharing application inspired by Splitwise, built with modern backend engineering practices and a scalable architecture.**
+
+![Status](https://img.shields.io/badge/status-in%20development-yellow?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)
+
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-000000?style=flat-square&logo=express&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=flat-square&logo=prisma&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
+
+</div>
 
 ---
 
-## Tech Stack
+## 📑 Table of Contents
+
+- [Tech Stack](#-tech-stack)
+- [Architecture](#-architecture)
+- [Project Structure](#-project-structure)
+- [Current Features](#-current-features)
+- [Roadmap](#-roadmap)
+- [Getting Started](#-getting-started)
+- [Branch Strategy](#-branch-strategy)
+- [Development Principles](#-development-principles)
+- [Planned Tech Stack](#-planned-tech-stack)
+- [License](#-license)
+
+---
+
+## 🛠 Tech Stack
 
 ### Backend
 
@@ -27,7 +55,7 @@ A production-grade expense sharing application inspired by Splitwise, built with
 
 ---
 
-## Architecture
+## 🏗 Architecture
 
 The backend follows a **feature-based architecture** with clear separation of responsibilities.
 
@@ -55,7 +83,7 @@ PostgreSQL
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
 ```text
 splitwise-clone/
@@ -90,7 +118,7 @@ splitwise-clone/
 
 ---
 
-## Current Features
+## ✅ Current Features
 
 ### Project Setup
 
@@ -108,7 +136,7 @@ splitwise-clone/
 - Prisma Client configured
 - Initial migration created
 
-Current User model:
+Current `User` model:
 
 ```prisma
 model User {
@@ -132,7 +160,7 @@ Implemented:
 
 ---
 
-## Roadmap
+## 🗺 Roadmap
 
 ### Authentication
 
@@ -183,7 +211,7 @@ Implemented:
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Clone
 
@@ -231,7 +259,7 @@ GET /health
 
 ---
 
-## Branch Strategy
+## 🌿 Branch Strategy
 
 Each major feature is developed in its own branch.
 
@@ -247,7 +275,7 @@ feature/realtime
 
 ---
 
-## Development Principles
+## 📐 Development Principles
 
 - Feature-based architecture
 - Layered backend design
@@ -258,7 +286,7 @@ feature/realtime
 
 ---
 
-## Planned Tech Stack
+## 📦 Planned Tech Stack
 
 | Category | Technology |
 |----------|------------|
@@ -277,6 +305,6 @@ feature/realtime
 
 ---
 
-## License
+## 📄 License
 
 MIT
