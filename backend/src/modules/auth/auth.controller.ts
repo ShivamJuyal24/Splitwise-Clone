@@ -58,3 +58,22 @@ export const loginUser = async (req: Request, res: Response)=>{
         })
     }
 }
+
+export const getCurrentUser = async (req: Request, res: Response) => {
+  if (!req.user) {
+    return res.status(401).json({
+      success: false,
+      message: "User not authenticated",
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    data: {
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+      createdAt: req.user.createdAt,
+    },
+  });
+};
