@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import authRoutes from "./modules/auth/auth.routes"
+import groupRoutes from "./modules/group/group.routes"
 const app = express();
 
 // Middleware
@@ -20,5 +21,6 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/group", groupRoutes);
 
 export default app;
