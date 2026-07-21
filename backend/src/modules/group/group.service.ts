@@ -1,6 +1,7 @@
 import {CreateGroupInput} from '../group/group.validation'
 import prisma from "../../lib/prisma"
 import {GroupRole} from "@prisma/client"
+
 export const createGroup = async (
     data: CreateGroupInput,
     userId: string
@@ -24,3 +25,23 @@ export const createGroup = async (
         return group;
     })
 }
+
+export const getUserGroups = async (userId: string) => {
+  const groups = await prisma.group.findMany({
+    where: {
+      members: {
+        some: {
+          userId: userId,
+        },
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return groups;
+};
