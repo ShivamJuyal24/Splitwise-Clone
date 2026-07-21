@@ -2,7 +2,7 @@
 
 # 💸 Splitwise Clone
 
-**A production-grade expense sharing application inspired by Splitwise, built with modern backend engineering practices and a scalable architecture.**
+**A production-grade expense sharing application inspired by Splitwise, built with modern backend engineering practices, scalable architecture, and clean software design principles.**
 
 ![Status](https://img.shields.io/badge/status-in%20development-yellow?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)
@@ -19,35 +19,37 @@
 
 ---
 
-## 📑 Table of Contents
+# 📑 Table of Contents
 
 - [Tech Stack](#-tech-stack)
+- [Project Goals](#-project-goals)
 - [Architecture](#-architecture)
 - [Project Structure](#-project-structure)
 - [Current Features](#-current-features)
+- [Database Design](#-database-design)
+- [Backend Concepts Implemented](#-backend-concepts-implemented)
 - [Roadmap](#-roadmap)
 - [Getting Started](#-getting-started)
 - [Branch Strategy](#-branch-strategy)
 - [Development Principles](#-development-principles)
-- [Planned Tech Stack](#-planned-tech-stack)
 - [License](#-license)
 
 ---
 
-## 🛠 Tech Stack
+# 🛠 Tech Stack
 
-### Backend
+## Backend
 
 - Express.js
 - TypeScript
 - PostgreSQL
 - Prisma ORM
 - Docker
-- JWT Authentication *(In Progress)*
-- Zod *(In Progress)*
-- bcrypt *(In Progress)*
+- JWT Authentication
+- bcrypt
+- Zod
 
-### Frontend
+## Frontend
 
 - React
 - Vite
@@ -55,55 +57,81 @@
 
 ---
 
-## 🏗 Architecture
+# 🎯 Project Goals
 
-The backend follows a **feature-based architecture** with clear separation of responsibilities.
+This project is not just about cloning Splitwise.
+
+The goal is to build a **production-oriented backend** while learning real-world backend engineering concepts such as:
+
+- Layered Architecture
+- REST API Design
+- Authentication & Authorization
+- Relational Database Modeling
+- Database Transactions
+- Prisma ORM
+- Dockerized Development
+- Scalable Backend Design
+- Clean Code Principles
+- Production-ready APIs
+
+---
+
+# 🏗 Architecture
+
+The backend follows a **feature-based layered architecture**.
 
 ```text
-Request
-   │
-   ▼
-Routes
-   │
-   ▼
-Controllers
-   │
-   ▼
-Services
-   │
-   ▼
-Repositories
-   │
-   ▼
-Prisma
-   │
-   ▼
-PostgreSQL
+                HTTP Request
+                     │
+                     ▼
+                 Express Routes
+                     │
+                     ▼
+          Authentication Middleware
+                     │
+                     ▼
+                Controllers
+                     │
+                     ▼
+                 Services
+                     │
+                     ▼
+                Prisma Client
+                     │
+                     ▼
+                 PostgreSQL
 ```
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
 ```text
 splitwise-clone/
 
 ├── backend/
+│
 │   ├── prisma/
-│   │   └── schema.prisma
+│   │   ├── schema.prisma
+│   │   └── migrations/
 │   │
 │   ├── src/
-│   │   ├── config/
-│   │   ├── constants/
+│   │
 │   │   ├── lib/
-│   │   │   └── prisma.ts
+│   │   │     └── prisma.ts
+│   │   │
 │   │   ├── middleware/
+│   │   │
 │   │   ├── modules/
-│   │   │   ├── auth/
-│   │   │   └── users/
+│   │   │
+│   │   │     ├── auth/
+│   │   │     ├── users/
+│   │   │     └── group/
+│   │   │
 │   │   ├── routes/
 │   │   ├── types/
 │   │   ├── utils/
+│   │   │
 │   │   ├── app.ts
 │   │   └── server.ts
 │   │
@@ -118,66 +146,172 @@ splitwise-clone/
 
 ---
 
-## ✅ Current Features
+# ✅ Current Features
 
-### Project Setup
+## 🚀 Project Setup
 
 - Express + TypeScript backend
 - React + Vite frontend
 - Dockerized PostgreSQL
-- Prisma ORM integration
-- Health check endpoint
+- Prisma ORM
 - Environment configuration
-- Feature-based folder structure
-
-### Database
-
-- PostgreSQL running in Docker
-- Prisma Client configured
-- Initial migration created
-
-Current `User` model:
-
-```prisma
-model User {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  password  String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-```
-
-### Repository Layer
-
-Implemented:
-
-- Create User
-- Find User by Email
-- Find User by ID
+- Feature-based architecture
 
 ---
 
-## 🗺 Roadmap
+## 🔐 Authentication
 
-### Authentication
+Implemented:
 
-- [ ] User Registration
-- [ ] Login
-- [ ] JWT Authentication
+- User Registration
+- User Login
+- Password Hashing (bcrypt)
+- JWT Authentication
+- Protected Routes
+- Get Current User Endpoint
+
+---
+
+## 👥 Groups
+
+Implemented:
+
+- Create Group
+- Automatically add creator as OWNER
+- Fetch all groups the authenticated user belongs to
+- Group membership using many-to-many relationship
+- Prisma Transactions for atomic group creation
+
+---
+
+## 🗄 Database
+
+Implemented:
+
+- User Model
+- Group Model
+- GroupMember Join Table
+- GroupRole Enum
+- Prisma Relations
+- Database Migrations
+
+---
+
+# 🗄 Database Design
+
+Current schema consists of four entities:
+
+- User
+- Group
+- GroupMember
+- GroupRole
+
+Relationship:
+
+```text
+User
+ ▲
+ │
+ │
+GroupMember
+ │
+ ▼
+Group
+```
+
+Highlights:
+
+- One User → Many Groups Created
+- One User → Many Group Memberships
+- One Group → Many Members
+- Composite Unique Constraint on `(userId, groupId)`
+- OWNER / MEMBER role support
+
+---
+
+# 📚 Backend Concepts Implemented
+
+This project is intentionally built to learn backend engineering rather than just complete features.
+
+## Architecture
+
+- Feature-Based Architecture
+- Layered Architecture
+- Separation of Concerns
+- Thin Controllers
+- Service Layer Pattern
+
+---
+
+## API Design
+
+- RESTful APIs
+- HTTP Status Codes
+- API Contracts
+- Request Validation (Zod)
+- Response Design
+
+---
+
+## Authentication
+
+- JWT Authentication
+- Protected Routes
+- Password Hashing
+- Express Request Augmentation
+- Authentication Middleware
+
+---
+
+## Database
+
+- Relational Database Design
+- One-to-Many Relationships
+- Many-to-Many Relationships
+- Join Tables
+- Foreign Keys
+- Prisma Relations
+- Relation Filtering
+- Composite Unique Constraints
+
+---
+
+## Business Logic
+
+- Database Transactions
+- Atomic Operations
+- Business Rules
+- Ownership Model
+- Role-based Membership
+
+---
+
+# 🗺 Roadmap
+
+## Authentication
+
+- [x] User Registration
+- [x] User Login
+- [x] Password Hashing
+- [x] JWT Authentication
+- [x] Protected Routes
 - [ ] Refresh Tokens
-- [ ] Password Hashing
-- [ ] Protected Routes
 
-### Groups
+---
 
-- [ ] Create Group
-- [ ] Invite Members
-- [ ] Join Groups
+## Groups
 
-### Expenses
+- [x] Create Group
+- [x] Get My Groups
+- [ ] Get Group Details
+- [ ] Add Members
+- [ ] Remove Members
+- [ ] Leave Group
+- [ ] Delete Group
+
+---
+
+## Expenses
 
 - [ ] Add Expense
 - [ ] Equal Split
@@ -185,61 +319,75 @@ Implemented:
 - [ ] Percentage Split
 - [ ] Expense History
 
-### Settlements
+---
 
-- [ ] Balance Calculation
-- [ ] Debt Simplification Algorithm
+## Balances
+
+- [ ] Calculate Balances
+- [ ] Simplify Debts
 - [ ] Settle Up
-
-### Realtime
-
-- [ ] Socket.IO
-- [ ] Live Expense Updates
-- [ ] Notifications
-
-### Production Features
-
-- [ ] Redis
-- [ ] BullMQ
-- [ ] Docker Compose
-- [ ] CI/CD
-- [ ] Unit Testing
-- [ ] Integration Testing
-- [ ] API Documentation
-- [ ] Logging
-- [ ] Rate Limiting
 
 ---
 
-## 🚀 Getting Started
+## Production Features
 
-### Clone
+- [ ] Redis
+- [ ] BullMQ
+- [ ] Rate Limiting
+- [ ] Logging
+- [ ] API Documentation
+- [ ] Unit Testing
+- [ ] Integration Testing
+- [ ] CI/CD
+- [ ] Docker Compose Production Setup
+
+---
+
+# 🚀 Getting Started
+
+## Clone Repository
 
 ```bash
 git clone <repository-url>
 cd splitwise-clone
 ```
 
-### Backend
+---
+
+## Backend Setup
 
 ```bash
 cd backend
 npm install
 ```
 
-### Start PostgreSQL
+---
+
+## Start PostgreSQL
 
 ```bash
 docker compose up -d
 ```
 
-### Run Prisma Migration
+---
+
+## Run Prisma Migration
 
 ```bash
 npx prisma migrate dev
 ```
 
-### Start Backend
+---
+
+## Generate Prisma Client
+
+```bash
+npx prisma generate
+```
+
+---
+
+## Start Backend
 
 ```bash
 npm run dev
@@ -251,22 +399,16 @@ Backend runs on:
 http://localhost:5000
 ```
 
-Health endpoint:
-
-```
-GET /health
-```
-
 ---
 
-## 🌿 Branch Strategy
+# 🌿 Branch Strategy
 
 Each major feature is developed in its own branch.
 
-Examples:
+Example:
 
-```
-feature/user-auth
+```text
+feature/auth
 feature/groups
 feature/expenses
 feature/settlements
@@ -275,36 +417,22 @@ feature/realtime
 
 ---
 
-## 📐 Development Principles
+# 📐 Development Principles
 
-- Feature-based architecture
-- Layered backend design
+- Clean Architecture
+- Feature-based Folder Structure
+- Layered Backend Design
 - Type-safe APIs
-- Modular and scalable codebase
-- Production-oriented development
-- Clean separation of concerns
+- Scalable Codebase
+- Production-oriented Development
+- Business-first Design
+- Modular Services
+- Clean Separation of Concerns
 
 ---
 
-## 📦 Planned Tech Stack
+# 📄 License
 
-| Category | Technology |
-|----------|------------|
-| Frontend | React, Vite, TypeScript |
-| Backend | Express, TypeScript |
-| Database | PostgreSQL |
-| ORM | Prisma |
-| Validation | Zod |
-| Authentication | JWT, bcrypt |
-| Realtime | Socket.IO |
-| Cache | Redis |
-| Queue | BullMQ |
-| Storage | S3 / MinIO |
-| Containerization | Docker |
-| CI/CD | GitHub Actions |
+MIT License
 
----
-
-## 📄 License
-Made By Shivam
-MIT
+Made with ❤️ by **Shivam Juyal**
